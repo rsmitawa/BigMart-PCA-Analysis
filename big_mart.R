@@ -1,5 +1,5 @@
 # Setting data directory to read/write files
-setwd("/home/ramesh/Documents/Data_Science/AV_Projts/Big Mart Sales III")
+setwd("/home/BigMart/")
 
 # Loading all the required libraries
 library(data.table)
