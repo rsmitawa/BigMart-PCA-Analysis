@@ -1,12 +1,12 @@
 # Setting data directory to read/write files
-setwd("/home/BigMart/")
+setwd("/home/ramesh/Documents/Data_Science/AV_Projts/Big Mart Sales III")
 
 # Loading all the required libraries
 library(data.table)
 library(tidyverse) #NOTE:Loading data.table first to use tidyverse functions for default
 library(fastDummies)
 library(rpart)
-library(rattle)
+library(rattle) # for fancy R plot
 
 # Reading data files -----------------------------------------------------------
 
@@ -37,31 +37,47 @@ new_dummy_df <- fastDummies::dummy_cols(.data = final_df,
 pca_train_df <- new_dummy_df[1:nrow(train_df)]
 pca_test_df <- new_dummy_df[-(1:nrow(train_df))]
 
-# Applying PCA on the training set
+# Applying PCA on the training set ----------------------------------------------
 princ_comp <- prcomp(x = pca_train_df, scale. = TRUE)
 pr_std_dev <- princ_comp$sdev
 pr_var <- pr_std_dev ^ 2
 pr_varex <- pr_var / sum(pr_var) 
 
 # plotting PCA for each column, and for cumsum
-plot(pr_varex, type = "b")
-plot(cumsum(pr_varex), type = "b")
+plot(pr_varex, type = "b",
+     main = "Scree plot of all PCs",
+     xlab = "Principal Component", 
+     ylab = "Variance")
+plot(cumsum(pr_varex), type = "b", 
+     main = "Cumulative variance plot of PCs",
+     xlab = "Principal Component", 
+     ylab = "Variance Explained")
 
 # Adding Principal components
 train_data <- data.frame(Sales = train_df$Item_Outlet_Sales, princ_comp$x)
 train_data <- train_data[, 1:31]
+
+# Machine Learning ----------------------------------------
+
+# Building decision tree model to predict sales 
 rpart_model <- rpart::rpart(formula = Sales ~ . , data = train_data, method = "anova")
+
+# Plotting the tree
 fancyRpartPlot(rpart_model)
 
-
+# Applying PCA on test set 
 test_data <- as.data.frame(predict(princ_comp, newdata = pca_test_df))
 test_data <- test_data[,1:30]
+
+# Predicting Sales price on Test data
 rpart_pred <- predict(rpart_model, newdata = test_data)
 
+# Final sales of test data
 final_output <- data.frame(Item_Identifier = test_df$Item_Identifier, 
                            Outlet_Identifier = test_df$Outlet_Identifier, 
                            Item_Outlet_Sales = rpart_pred)
-
+# Printing head of final result
 head(final_output)
 
-# My code is like my room, Clean and Neat
+# Saving output in a csv file
+write.csv(final_output, "Final_Sales.csv")
