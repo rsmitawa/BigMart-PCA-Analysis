@@ -44,13 +44,6 @@ The analysis uses PCA for dimensionality reduction on the BigMart dataset, then 
 
 ## Results
 
-The final predictions are saved in "Final_Sales.csv".
-
-## Future Improvements
-
-- Experiment with other machine learning algorithms
-- Perform cross-validation for more robust model evaluation
-- Explore feature importance based on PCA loadings
-- Consider adding more visualizations of the data and results
+The final predictions are saved in "Predictions.csv".
 
 ---
