@@ -1,9 +1,56 @@
-# Big Mart Analsis With PCA
+---
 
-## Problem: Big Mart wants to predict sales of their product based on the data collected from - to this. They have provided two datasets training and testing. Our task is to predict sales for the testing set using training set. 
+# BigMart Sales Prediction using PCA and Decision Trees
 
-## Description: 
+This project applies Principal Component Analysis (PCA) to the BigMart dataset, followed by a decision tree model to predict sales.
 
+## Overview
 
+The analysis uses PCA for dimensionality reduction on the BigMart dataset, then builds a decision tree model to predict Item_Outlet_Sales. This approach helps in understanding the underlying structure of the data and potentially improves prediction accuracy.
 
-![Image](https://img.shields.io/badge/PCA-principal%20componant%20analysis-green)	
+## Key Features
+
+- Data preprocessing and handling of missing values
+- PCA for dimensionality reduction
+- Decision tree model for sales prediction
+- Visualization of PCA results and decision tree
+
+## Requirements
+
+- R (version used in your environment)
+- Required packages: data.table, tidyverse, fastDummies, rpart, rattle
+
+## Usage
+
+1. Set your working directory in the script
+2. Ensure all required CSV files are in the working directory
+3. Run the R script
+
+## Data Preprocessing
+
+- Handling of missing values in Item_Weight and Item_Visibility
+- Creation of dummy variables for categorical features
+- Merging of train and test datasets for consistent preprocessing
+
+## PCA Analysis
+
+- PCA applied to the preprocessed dataset
+- Scree plot and cumulative variance plot generated for PC selection
+
+## Machine Learning
+
+- Decision tree model built using the rpart package
+- Prediction on test data using the trained model
+
+## Results
+
+The final predictions are saved in "Final_Sales.csv".
+
+## Future Improvements
+
+- Experiment with other machine learning algorithms
+- Perform cross-validation for more robust model evaluation
+- Explore feature importance based on PCA loadings
+- Consider adding more visualizations of the data and results
+
+---
